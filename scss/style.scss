@@ -1,1 +1,116 @@
 /* setup the layout in function of device */
+$clr-bckgrd: #F2F2F2;
+$clr-myBooks-1: #1C8C81;
+$clr-myBooks-2: #2AD2BF;
+$logo-url: "../logo/logo.svg";
+$logo-size: 80px;
+$margin: 2%;
+$size: 1em;
+
+body {
+	background-color: $clr-bckgrd;
+}
+
+#myBooks {
+	text-align: center;
+	font-family: 'Redressed', cursive;
+	background: linear-gradient(to bottom right, $clr-myBooks-1, $clr-myBooks-2);
+	border: 2px solid;
+	border-radius: 10px 10px;
+	margin-right: $margin;
+	margin-left: $margin;
+	box-shadow: 5px 5px 10px black;
+}
+
+@media screen and (max-width: 740px) {
+	h1 {
+		font-family: 'Playfair Display', serif;
+		font-size: $size;
+		margin-left: $margin;
+	}
+
+	h2 {
+		font-size: $size;
+	}
+
+	.title {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-left: $margin;
+		margin-top: $margin;
+	}
+
+	#logo {
+		height: $logo-size;
+		width: $logo-size;
+		background-image: url($logo-url);
+		background-position: center;
+		border: 1px solid;
+		border-radius: 5px 5px;
+		box-shadow: 2px 2px 5px black;
+		justify-content: flex-start;
+	}
+}
+
+@media screen and (min-width: 740px) and (max-width: 1024px) {
+	h1 {
+		font-family: 'Playfair Display', serif;
+		font-size: $size * 2;
+		margin-left: $margin;
+	}
+
+	h2 {
+		font-size: $size * 1.5;
+	}
+
+	.title {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		margin-left: $margin;
+		margin-top: $margin;
+	}
+
+	#logo {
+		height: $logo-size * 1.5;
+		width: $logo-size * 1.5;
+		background-image: url($logo-url);
+		background-position: center;
+		border: 1px solid;
+		border-radius: 5px 5px;
+		box-shadow: 2px 2px 5px black;
+		justify-content: flex-start;
+	}
+}
+
+@media screen and (min-width: 1024px) {
+	h1 {
+		font-family: 'Playfair Display', serif;
+		font-size: $size * 2.5;
+		margin-left: $margin;
+	}
+
+	h2 {
+		font-size: $size * 2;
+	}
+
+	.title {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		margin-left: $margin;
+		margin-top: $margin;
+	}
+
+	#logo {
+		height: $logo-size * 2;
+		width: $logo-size * 2;
+		background-image: url($logo-url);
+		background-position: center;
+		border: 1px solid;
+		border-radius: 5px 5px;
+		box-shadow: 2px 2px 5px black;
+		justify-content: flex-start;
+	}
+}
