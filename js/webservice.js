@@ -2,9 +2,15 @@
 
 //Declaration of variables
 const myBooks = document.getElementById("myBooks");
-const submit = document.getElementById("submit");
 const hrArray = document.getElementsByTagName("hr");
 const hr = hrArray[0];
+const myAPIKey = "AIzaSyC5yCc8Aehtb-laJgLByQmzVdLKa9imdBs";
+let titleCheck = false;
+let authorCheck = false;
+let titleSearchByUser;
+let authorSearchByUser;
+let identifierResult;
+let descriptionResult;
 
 //Creation of button "Nouveau Livre"
 const addNewBook = document.createElement("input");
@@ -45,17 +51,66 @@ const cancel = form.appendChild(document.createElement("input"));
 cancel.setAttribute("type", "reset");
 cancel.setAttribute("id", "reset");
 cancel.setAttribute("value", "Annuler");
-const myAPIKey = "AIzaSyC5yCc8Aehtb-laJgLByQmzVdLKa9imdBs";
-let titleSearchByUser;
-let authorSearchByUser;
+
+//Creation of result block
+const result = document.createElement("div");
+result.setAttribute("id", "result");
+const seperation = result.appendChild(document.createElement("hr"));
+const header = result.appendChild(document.createElement("h2"));
+header.setAttribute("id", "header-result");
+header.textContent = "Resultat de la recherche"
+const resultBlock = result.appendChild(document.createElement("div"));
+resultBlock.setAttribute("class", "result-block")
+const titleResult = resultBlock.appendChild(document.createElement("h3"));
+titleResult.setAttribute("class", "title-result");
+titleResult.textContent = "Titre: " + titleSearchByUser;
+const authorResult = resultBlock.appendChild(document.createElement("h3"));
+authorResult.setAttribute("class", "author-result");
+authorResult.textContent = "Auteur: " + authorSearchByUser;
+const id = resultBlock.appendChild(document.createElement("h4"));
+id.setAttribute("class", "identifier-result");
+id.textContent = "Identifiant: " + identifierResult;
+const description = resultBlock.appendChild(document.createElement("p"));
+description.setAttribute("class", "description-result");
+description.setAttribute("maxlength", "200");
+description.textContent = "Description: " + descriptionResult;
+const icon = resultBlock.appendChild(document.createElement("img"));
+icon.setAttribute("class", "icon-result");
+icon.setAttribute("src", "./image/bookmark.svg");
+const picture = resultBlock.appendChild(document.createElement("img"));
+picture.setAttribute("class", "picture-result");
+picture.setAttribute("src", "");
 
 //Action to put form in #myBooks/remove from #myBooks
 addNewBook.addEventListener("click", (event) => {
-  const formInsert = document.getElementById("form");
+  let formInsert = document.getElementById("form");
   if (formInsert == null) {
     myBooks.insertBefore(form, hr);
   } else {
     myBooks.removeChild(formInsert);
   }
   formInsert = null;
+});
+
+//Action to put result in #myBooks/remove from #myBooks
+titleSearch.addEventListener("change", (event) => {
+  titleSearchByUser = event.target.value;
+  titleCheck = true;
+});
+authorSearch.addEventListener("change", (event) => {
+  authorSearchByUser = event.target.value;
+  authorCheck = true;
+});
+search.addEventListener("click", (event) => {
+  if(titleCheck && authorCheck) {
+    myBooks.insertBefore(result, hr);
+    titleCheck = false;
+    authorCheck = false;
+  }
+  event.preventDefault();
+});
+cancel.addEventListener("click", (event) => {
+  myBooks.removeChild(result);
+  titleCheck = false;
+  authorCheck = false;
 });
