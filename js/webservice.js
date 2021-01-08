@@ -5,6 +5,7 @@ const myBooks = document.getElementById("myBooks");
 const hrArray = document.getElementsByTagName("hr");
 const hr = hrArray[0];
 const myAPIKey = "AIzaSyC5yCc8Aehtb-laJgLByQmzVdLKa9imdBs";
+let request = new XMLHttpRequest();
 let titleCheck = false;
 let authorCheck = false;
 let titleSearchByUser;
@@ -59,27 +60,6 @@ const seperation = result.appendChild(document.createElement("hr"));
 const header = result.appendChild(document.createElement("h2"));
 header.setAttribute("id", "header-result");
 header.textContent = "Resultat de la recherche"
-const resultBlock = result.appendChild(document.createElement("div"));
-resultBlock.setAttribute("class", "result-block")
-const titleResult = resultBlock.appendChild(document.createElement("h3"));
-titleResult.setAttribute("class", "title-result");
-titleResult.textContent = "Titre: " + titleSearchByUser;
-const authorResult = resultBlock.appendChild(document.createElement("h3"));
-authorResult.setAttribute("class", "author-result");
-authorResult.textContent = "Auteur: " + authorSearchByUser;
-const id = resultBlock.appendChild(document.createElement("h4"));
-id.setAttribute("class", "identifier-result");
-id.textContent = "Identifiant: " + identifierResult;
-const description = resultBlock.appendChild(document.createElement("p"));
-description.setAttribute("class", "description-result");
-description.setAttribute("maxlength", "200");
-description.textContent = "Description: " + descriptionResult;
-const icon = resultBlock.appendChild(document.createElement("img"));
-icon.setAttribute("class", "icon-result");
-icon.setAttribute("src", "./image/bookmark.svg");
-const picture = resultBlock.appendChild(document.createElement("img"));
-picture.setAttribute("class", "picture-result");
-picture.setAttribute("src", "");
 
 //Action to put form in #myBooks/remove from #myBooks
 addNewBook.addEventListener("click", (event) => {
@@ -92,25 +72,87 @@ addNewBook.addEventListener("click", (event) => {
   formInsert = null;
 });
 
-//Action to put result in #myBooks/remove from #myBooks
+//Action to grab the entry of user
 titleSearch.addEventListener("change", (event) => {
   titleSearchByUser = event.target.value;
   titleCheck = true;
 });
-authorSearch.addEventListener("change", (event) => {
+authorSearch.addEventListener("input", (event) => {
   authorSearchByUser = event.target.value;
   authorCheck = true;
 });
+
+//Action to send/create/remove result
 search.addEventListener("click", (event) => {
-  if(titleCheck && authorCheck) {
-    myBooks.insertBefore(result, hr);
-    titleCheck = false;
-    authorCheck = false;
-  }
+  //Request GET to Google Book
+  request.onreadystatechange = function() {
+    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+      let resutBlockExist = document.getElementsByClassName("result-block");
+      while (resutBlockExist[0] != null) {
+        resutBlockExist[0].remove();
+      };
+      let response = JSON.parse(this.responseText);
+      resultBlockFunction(result, response);
+      resutBlockExist = null;
+      response = null;
+    }
+  };
+  request.open("GET", "https://www.googleapis.com/books/v1/volumes?q=" + titleSearchByUser + "&+inautor:" + authorSearchByUser + "&startIndex=0&maxResults=10&key=" + myAPIKey);
+  request.send();
+
+  myBooks.insertBefore(result, hr);
   event.preventDefault();
 });
+
 cancel.addEventListener("click", (event) => {
-  myBooks.removeChild(result);
-  titleCheck = false;
-  authorCheck = false;
+  let resutBlockExist = document.getElementsByClassName("result-block");
+  let resultExist = document.getElementById("result");
+  let formInsert = document.getElementById("form");
+  if(resutBlockExist != null && resultExist != null) {
+    while (resutBlockExist[0] != null) {
+      resutBlockExist[0].remove();
+    };
+    resultExist.remove();
+  }
+  if (formInsert != null && resultExist == null) {
+    formInsert.remove();
+  }
+  resutBlockExist = null;
+  resultExist = null;
+  formInsert = null;
 });
+
+//Function to create resultblock
+const resultBlockFunction = (elementParent, response) => {
+  for(let i=0; i<=5; i++) {
+    const resultBlock = elementParent.appendChild(document.createElement("div"));
+    resultBlock.setAttribute("class", "result-block");
+    const titleResult = resultBlock.appendChild(document.createElement("h3"));
+    titleResult.setAttribute("class", "title-result");
+    titleResult.textContent = "Titre: " + response.items[i].volumeInfo.title;
+    const authorResult = resultBlock.appendChild(document.createElement("h3"));
+    authorResult.setAttribute("class", "author-result");
+    authorResult.textContent = "Auteur: " + response.items[i].volumeInfo.authors[0];//author[0] to use the first author of response
+    const id = resultBlock.appendChild(document.createElement("h4"));
+    id.setAttribute("class", "identifier-result");
+    id.textContent = "Identifiant: " + response.items[i].volumeInfo.industryIdentifiers[0].identifier;
+    const description = resultBlock.appendChild(document.createElement("p"));
+    description.setAttribute("class", "description-result");
+    description.setAttribute("maxlength", "200");
+    if(response.items[i].volumeInfo.description == undefined) {
+      description.textContent = "Description: Information manquante";
+    } else {
+      description.textContent = "Description: " + response.items[i].volumeInfo.description;
+    }
+    const icon = resultBlock.appendChild(document.createElement("img"));
+    icon.setAttribute("class", "icon-result");
+    icon.setAttribute("src", "./image/bookmark.svg");
+    const picture = resultBlock.appendChild(document.createElement("img"));
+    picture.setAttribute("class", "picture-result");
+    if(response.items[i].volumeInfo.imageLinks == undefined) {
+      picture.setAttribute("src", "./image/unavailable.png");
+    } else {
+      picture.setAttribute("src", response.items[i].volumeInfo.imageLinks.thumbnail);
+    } 
+  }
+}
