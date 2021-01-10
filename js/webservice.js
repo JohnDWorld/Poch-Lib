@@ -2,9 +2,14 @@
 
 //Declaration of variables
 const myBooks = document.getElementById("myBooks");
+const myPochLib = document.getElementById("content");
 const hrArray = document.getElementsByTagName("hr");
 const hr = hrArray[0];
 const myAPIKey = "AIzaSyC5yCc8Aehtb-laJgLByQmzVdLKa9imdBs";
+const nbrResultToShow = 4;
+const nbrResultToSave = 0;
+const iconBookmark = "./image/bookmark.svg";
+const iconTrash = "./image/trash.svg";
 let request = new XMLHttpRequest();
 let titleCheck = false;
 let authorCheck = false;
@@ -87,23 +92,30 @@ search.addEventListener("click", (event) => {
   //Request GET to Google Book
   request.onreadystatechange = function() {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+      // Loop to check existing result
       let resutBlockExist = document.getElementsByClassName("result-block");
       while (resutBlockExist[0] != null) {
         resutBlockExist[0].remove();
       };
+      // Create th result block
       let response = JSON.parse(this.responseText);
-      resultBlockFunction(result, response);
-      resutBlockExist = null;
-      response = null;
+      for(let i=0; i<=response.items.length; i++) {
+        resultBlockFunction(result, response.items[i], iconBookmark);
+      }
     }
   };
-  request.open("GET", "https://www.googleapis.com/books/v1/volumes?q=" + titleSearchByUser + "&+inautor:" + authorSearchByUser + "&startIndex=0&maxResults=10&key=" + myAPIKey);
+  request.open("GET", "https://www.googleapis.com/books/v1/volumes?q=" + titleSearchByUser + "&+inautor:" + authorSearchByUser + "&startIndex=0&maxResults=4&key=" + myAPIKey);
   request.send();
-
-  myBooks.insertBefore(result, hr);
+  //Check if the user write something and insert the result
+  if(titleCheck && authorCheck) {
+    myBooks.insertBefore(result, hr);
+    titleCheck = false;
+    authorCheck = false;
+  }
   event.preventDefault();
 });
 
+// Remove the result
 cancel.addEventListener("click", (event) => {
   let resutBlockExist = document.getElementsByClassName("result-block");
   let resultExist = document.getElementById("result");
@@ -123,36 +135,46 @@ cancel.addEventListener("click", (event) => {
 });
 
 //Function to create resultblock
-const resultBlockFunction = (elementParent, response) => {
-  for(let i=0; i<=5; i++) {
-    const resultBlock = elementParent.appendChild(document.createElement("div"));
-    resultBlock.setAttribute("class", "result-block");
-    const titleResult = resultBlock.appendChild(document.createElement("h3"));
-    titleResult.setAttribute("class", "title-result");
-    titleResult.textContent = "Titre: " + response.items[i].volumeInfo.title;
-    const authorResult = resultBlock.appendChild(document.createElement("h3"));
-    authorResult.setAttribute("class", "author-result");
-    authorResult.textContent = "Auteur: " + response.items[i].volumeInfo.authors[0];//author[0] to use the first author of response
-    const id = resultBlock.appendChild(document.createElement("h4"));
-    id.setAttribute("class", "identifier-result");
-    id.textContent = "Identifiant: " + response.items[i].volumeInfo.industryIdentifiers[0].identifier;
-    const description = resultBlock.appendChild(document.createElement("p"));
-    description.setAttribute("class", "description-result");
-    description.setAttribute("maxlength", "200");
-    if(response.items[i].volumeInfo.description == undefined) {
-      description.textContent = "Description: Information manquante";
-    } else {
-      description.textContent = "Description: " + response.items[i].volumeInfo.description;
-    }
-    const icon = resultBlock.appendChild(document.createElement("img"));
-    icon.setAttribute("class", "icon-result");
-    icon.setAttribute("src", "./image/bookmark.svg");
-    const picture = resultBlock.appendChild(document.createElement("img"));
-    picture.setAttribute("class", "picture-result");
-    if(response.items[i].volumeInfo.imageLinks == undefined) {
-      picture.setAttribute("src", "./image/unavailable.png");
-    } else {
-      picture.setAttribute("src", response.items[i].volumeInfo.imageLinks.thumbnail);
-    } 
+const resultBlockFunction = (elementParent, response, iconToUse) => {
+  const resultBlock = elementParent.appendChild(document.createElement("div"));
+  resultBlock.setAttribute("class", "result-block");
+  const titleResult = resultBlock.appendChild(document.createElement("h3"));
+  titleResult.setAttribute("class", "title-result");
+  titleResult.textContent = "Titre: " + response.volumeInfo.title;
+  const authorResult = resultBlock.appendChild(document.createElement("h3"));
+  authorResult.setAttribute("class", "author-result");
+  authorResult.textContent = "Auteur: " + response.volumeInfo.authors[0];//author[0] to use the first author of response
+  const id = resultBlock.appendChild(document.createElement("h4"));
+  id.setAttribute("class", "identifier-result");
+  id.textContent = "Identifiant: " + response.volumeInfo.industryIdentifiers[0].identifier;
+  const description = resultBlock.appendChild(document.createElement("p"));
+  description.setAttribute("class", "description-result");
+  description.setAttribute("maxlength", "200");
+  if(response.volumeInfo.description == undefined) {
+    description.textContent = "Description: Information manquante";
+  } else {
+    description.textContent = "Description: " + response.volumeInfo.description;
   }
+  const icon = resultBlock.appendChild(document.createElement("img"));
+  icon.setAttribute("class", "icon-result");
+  icon.setAttribute("src", iconToUse);
+  if(iconToUse == iconBookmark) {
+    //Add to my poch'list
+    icon.addEventListener("click", (event) => {
+      resultBlockFunction(myPochLib, response, iconTrash);
+    })
+  } else if(iconToUse == iconTrash) {
+    //Remove from my poch'list
+    icon.addEventListener("click", (event) => {
+      const iconBlocResult = icon.parentElement;
+      iconBlocResult.remove();
+    })
+  }
+  const picture = resultBlock.appendChild(document.createElement("img"));
+  picture.setAttribute("class", "picture-result");
+  if(response.volumeInfo.imageLinks == undefined) {
+    picture.setAttribute("src", "./image/unavailable.png");
+  } else {
+    picture.setAttribute("src", response.volumeInfo.imageLinks.thumbnail);
+  } 
 }

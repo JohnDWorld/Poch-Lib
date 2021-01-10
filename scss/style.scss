@@ -2,7 +2,7 @@
 $clr-bckgrd: #F2F2F2;
 $clr-myBooks-1: #1C8C81;
 $clr-myBooks-2: #2AD2BF;
-$logo-url: "../logo/logo.svg";
+$logo-url: "../image/logo/logo.svg";
 $logo-size: 80px;
 $margin: 2%;
 $size: 1em;
@@ -113,16 +113,14 @@ body {
 		box-shadow: 2px 2px 5px black;
 		justify-content: flex-start;
 	}
-
-	.icon-result {
-    	width: $logo-size;
-    	height: $logo-size;
-    	background-color: white;
-    	color: red;
-  	}
   
-  	.picture-result {
-    	width: $logo-size;
-    	height: $logo-size;
-  	}
+  .icon-result {
+    width: $logo-size;
+    height: $logo-size;
+  }
+  
+  .picture-result {
+    width: $logo-size;
+    height: $logo-size;
+  }
 }

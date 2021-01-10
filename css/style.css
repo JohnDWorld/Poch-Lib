@@ -31,7 +31,7 @@ body {
   #logo {
     height: 80px;
     width: 80px;
-    background-image: url("../logo/logo.svg");
+    background-image: url("../image/logo/logo.svg");
     background-position: center;
     border: 1px solid;
     border-radius: 5px 5px;
@@ -56,7 +56,7 @@ body {
   #logo {
     height: 120px;
     width: 120px;
-    background-image: url("../logo/logo.svg");
+    background-image: url("../image/logo/logo.svg");
     background-position: center;
     border: 1px solid;
     border-radius: 5px 5px;
@@ -81,7 +81,7 @@ body {
   #logo {
     height: 160px;
     width: 160px;
-    background-image: url("../logo/logo.svg");
+    background-image: url("../image/logo/logo.svg");
     background-position: center;
     border: 1px solid;
     border-radius: 5px 5px;
@@ -90,9 +90,7 @@ body {
 
   .icon-result {
     width: 80px;
-    height: 80px;
-    background-color: white;
-    color: red; }
+    height: 80px; }
 
   .picture-result {
     width: 80px;
