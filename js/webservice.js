@@ -1,4 +1,53 @@
 /* exchange with websevice */
+//Function to create resultblock
+const resultBlockFunction = (response, iconToUse) => {
+  const resultBlock = document.createElement("div");
+  resultBlock.setAttribute("class", "result-block");
+  const titleResult = resultBlock.appendChild(document.createElement("h3"));
+  titleResult.setAttribute("class", "title-result");
+  titleResult.textContent = "Titre: " + response.volumeInfo.title;
+  const authorResult = resultBlock.appendChild(document.createElement("h3"));
+  authorResult.setAttribute("class", "author-result");
+  authorResult.textContent = "Auteur: " + response.volumeInfo.authors[0];//author[0] to use the first author of response
+  const id = resultBlock.appendChild(document.createElement("h4"));
+  id.setAttribute("id", response.volumeInfo.industryIdentifiers[0].identifier);
+  id.textContent = "Identifiant: " + response.volumeInfo.industryIdentifiers[0].identifier;
+  const description = resultBlock.appendChild(document.createElement("p"));
+  description.setAttribute("class", "description-result");
+  description.setAttribute("maxlength", "200");
+  if(response.volumeInfo.description == undefined) {
+    description.textContent = "Description: Information manquante";
+  } else {
+    description.textContent = "Description: " + response.volumeInfo.description;
+  }
+  const picture = resultBlock.appendChild(document.createElement("img"));
+  picture.setAttribute("class", "picture-result");
+  if(response.volumeInfo.imageLinks == undefined) {
+    picture.setAttribute("src", "./image/unavailable.png");
+  } else {
+    picture.setAttribute("src", response.volumeInfo.imageLinks.thumbnail);
+  }
+  const icon = resultBlock.appendChild(document.createElement("img"));
+  icon.setAttribute("class", "icon-result");
+  icon.setAttribute("src", iconToUse);
+  if(iconToUse == iconBookmark) {
+    //Add to my poch'list
+    icon.addEventListener("click", (event) => {
+      const resultBlockToSave = resultBlockFunction(response, iconTrash);
+      const resultBlockToSave_JSON = JSON.stringify(response);
+      sessionStorage.setItem(response.volumeInfo.industryIdentifiers[0].identifier, resultBlockToSave_JSON);
+      myPochLib.appendChild(resultBlockToSave);
+    });
+  } else if(iconToUse == iconTrash) {
+    //Remove from my poch'list
+    icon.addEventListener("click", (event) => {
+      const iconParentToRemove = icon.parentElement;
+      iconParentToRemove.remove();
+      sessionStorage.removeItem(response.volumeInfo.industryIdentifiers[0].identifier);
+    })
+  }
+  return resultBlock;
+}
 
 //Declaration of variables
 const myBooks = document.getElementById("myBooks");
@@ -39,6 +88,7 @@ titleSearch.setAttribute("name", "title-search");
 titleSearch.setAttribute("id", "title-search");
 titleSearch.setAttribute("placeholder", "Rechercher un titre sur le site ...");
 titleSearch.setAttribute("required", "required");
+titleSearch.setAttribute("value", "Twiligh");
 const author = form.appendChild(document.createElement("div"));
 const authorLabel = author.appendChild(document.createElement("label"));
 authorLabel.setAttribute("for", "author-search");
@@ -49,6 +99,7 @@ authorSearch.setAttribute("name", "author-search");
 authorSearch.setAttribute("id", "author-search");
 authorSearch.setAttribute("placeholder", "Rechercher un auteur sur le site ...");
 authorSearch.setAttribute("required", "required");
+authorSearch.setAttribute("value", "Stepheni");
 const search = form.appendChild(document.createElement("input"));
 search.setAttribute("type", "submit");
 search.setAttribute("id", "submit");
@@ -99,13 +150,14 @@ search.addEventListener("click", (event) => {
       };
       // Create th result block
       let response = JSON.parse(this.responseText);
-      for(let i=0; i<=response.items.length; i++) {
-        resultBlockFunction(result, response.items[i], iconBookmark);
+      for(let i=0; i<response.items.length; i++) {
+        result.appendChild(resultBlockFunction(response.items[i], iconBookmark));
       }
     }
   };
-  request.open("GET", "https://www.googleapis.com/books/v1/volumes?q=" + titleSearchByUser + "&+inautor:" + authorSearchByUser + "&startIndex=0&maxResults=4&key=" + myAPIKey);
+  request.open("GET", "https://www.googleapis.com/books/v1/volumes?q=" + titleSearchByUser + "&+inautor:" + authorSearchByUser + "&startIndex=0&maxResults=5&key=" + myAPIKey);
   request.send();
+
   //Check if the user write something and insert the result
   if(titleCheck && authorCheck) {
     myBooks.insertBefore(result, hr);
@@ -117,7 +169,7 @@ search.addEventListener("click", (event) => {
 
 // Remove the result
 cancel.addEventListener("click", (event) => {
-  let resutBlockExist = document.getElementsByClassName("result-block");
+  let resutBlockExist = document.querySelector("#result .result-block");
   let resultExist = document.getElementById("result");
   let formInsert = document.getElementById("form");
   if(resutBlockExist != null && resultExist != null) {
@@ -134,47 +186,12 @@ cancel.addEventListener("click", (event) => {
   formInsert = null;
 });
 
-//Function to create resultblock
-const resultBlockFunction = (elementParent, response, iconToUse) => {
-  const resultBlock = elementParent.appendChild(document.createElement("div"));
-  resultBlock.setAttribute("class", "result-block");
-  const titleResult = resultBlock.appendChild(document.createElement("h3"));
-  titleResult.setAttribute("class", "title-result");
-  titleResult.textContent = "Titre: " + response.volumeInfo.title;
-  const authorResult = resultBlock.appendChild(document.createElement("h3"));
-  authorResult.setAttribute("class", "author-result");
-  authorResult.textContent = "Auteur: " + response.volumeInfo.authors[0];//author[0] to use the first author of response
-  const id = resultBlock.appendChild(document.createElement("h4"));
-  id.setAttribute("class", "identifier-result");
-  id.textContent = "Identifiant: " + response.volumeInfo.industryIdentifiers[0].identifier;
-  const description = resultBlock.appendChild(document.createElement("p"));
-  description.setAttribute("class", "description-result");
-  description.setAttribute("maxlength", "200");
-  if(response.volumeInfo.description == undefined) {
-    description.textContent = "Description: Information manquante";
-  } else {
-    description.textContent = "Description: " + response.volumeInfo.description;
-  }
-  const icon = resultBlock.appendChild(document.createElement("img"));
-  icon.setAttribute("class", "icon-result");
-  icon.setAttribute("src", iconToUse);
-  if(iconToUse == iconBookmark) {
-    //Add to my poch'list
-    icon.addEventListener("click", (event) => {
-      resultBlockFunction(myPochLib, response, iconTrash);
-    })
-  } else if(iconToUse == iconTrash) {
-    //Remove from my poch'list
-    icon.addEventListener("click", (event) => {
-      const iconBlocResult = icon.parentElement;
-      iconBlocResult.remove();
-    })
-  }
-  const picture = resultBlock.appendChild(document.createElement("img"));
-  picture.setAttribute("class", "picture-result");
-  if(response.volumeInfo.imageLinks == undefined) {
-    picture.setAttribute("src", "./image/unavailable.png");
-  } else {
-    picture.setAttribute("src", response.volumeInfo.imageLinks.thumbnail);
-  } 
+//Restor session storage
+if(sessionStorage.length>1){
+  for(let i=0; i<sessionStorage.length; i++){
+    let key = sessionStorage.key(i);
+    let resultBlockToRestor_JSON = sessionStorage.getItem(key);
+    let resultBlockToRestor = JSON.parse(resultBlockToRestor_JSON);
+    myPochLib.appendChild(resultBlockFunction(resultBlockToRestor, iconTrash));
+  };
 }
