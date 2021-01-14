@@ -33,10 +33,21 @@ const resultBlockFunction = (response, iconToUse) => {
   if(iconToUse == iconBookmark) {
     //Add to my poch'list
     icon.addEventListener("click", (event) => {
-      const resultBlockToSave = resultBlockFunction(response, iconTrash);
-      const resultBlockToSave_JSON = JSON.stringify(response);
-      sessionStorage.setItem(response.volumeInfo.industryIdentifiers[0].identifier, resultBlockToSave_JSON);
-      myPochLib.appendChild(resultBlockToSave);
+      let checkBook = false;
+      for(let i=0; i<sessionStorage.length; i++){
+        if(response.volumeInfo.industryIdentifiers[0].identifier == sessionStorage.key(i)){
+          checkBook = true;
+        }
+      };
+      if(checkBook) {
+        alert("Vous ne pourvez pass ajouter 2 fois le même livre à votre liste");
+      } else {
+        const resultBlockToSave = resultBlockFunction(response, iconTrash);
+        const resultBlockToSave_JSON = JSON.stringify(response);
+        sessionStorage.setItem(response.volumeInfo.industryIdentifiers[0].identifier, resultBlockToSave_JSON);
+        myPochLib.appendChild(resultBlockToSave);
+      }
+      checkBook = null;
     });
   } else if(iconToUse == iconTrash) {
     //Remove from my poch'list
@@ -49,16 +60,19 @@ const resultBlockFunction = (response, iconToUse) => {
   return resultBlock;
 }
 
+//Function to insert after a node
+Object.prototype.insertAfter = function (newNode) { this.parentNode.insertBefore(newNode, this.nextSibling); }
+
 //Declaration of variables
 const myBooks = document.getElementById("myBooks");
 const myPochLib = document.getElementById("content");
-const hrArray = document.getElementsByTagName("hr");
-const hr = hrArray[0];
+const hrList = document.getElementsByTagName("hr");
 const myAPIKey = "AIzaSyC5yCc8Aehtb-laJgLByQmzVdLKa9imdBs";
 const nbrResultToShow = 4;
 const nbrResultToSave = 0;
 const iconBookmark = "./image/bookmark.svg";
 const iconTrash = "./image/trash.svg";
+let hr = hrList[0];
 let request = new XMLHttpRequest();
 let titleCheck = false;
 let authorCheck = false;
@@ -66,6 +80,15 @@ let titleSearchByUser;
 let authorSearchByUser;
 let identifierResult;
 let descriptionResult;
+
+//Restor session storage
+if(sessionStorage.length != 1){
+  for(let i=0; i<sessionStorage.length; i++){
+    let resultBlockToRestor_JSON = sessionStorage.getItem(sessionStorage.key(i));
+    let resultBlockToRestor = JSON.parse(resultBlockToRestor_JSON);
+    myPochLib.appendChild(resultBlockFunction(resultBlockToRestor, iconTrash));
+  };
+}
 
 //Creation of button "Nouveau Livre"
 const addNewBook = document.createElement("input");
@@ -115,17 +138,16 @@ result.setAttribute("id", "result");
 const seperation = result.appendChild(document.createElement("hr"));
 const header = result.appendChild(document.createElement("h2"));
 header.setAttribute("id", "header-result");
-header.textContent = "Resultat de la recherche"
+header.textContent = "Resultat de la recherche";
 
 //Action to put form in #myBooks/remove from #myBooks
 addNewBook.addEventListener("click", (event) => {
-  let formInsert = document.getElementById("form");
+  const formInsert = document.getElementById("form");
   if (formInsert == null) {
-    myBooks.insertBefore(form, hr);
+    addNewBook.insertAfter(form);
   } else {
     myBooks.removeChild(formInsert);
   }
-  formInsert = null;
 });
 
 //Action to grab the entry of user
@@ -144,10 +166,12 @@ search.addEventListener("click", (event) => {
   request.onreadystatechange = function() {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
       // Loop to check existing result
-      let resutBlockExist = document.getElementsByClassName("result-block");
-      while (resutBlockExist[0] != null) {
-        resutBlockExist[0].remove();
-      };
+      let resultToRemove = document.querySelector("#result .result-block");
+      while(resultToRemove != null) {
+        resultToRemove.remove();
+        resultToRemove = document.querySelector("#result .result-block");
+      }
+      
       // Create th result block
       let response = JSON.parse(this.responseText);
       for(let i=0; i<response.items.length; i++) {
@@ -185,13 +209,3 @@ cancel.addEventListener("click", (event) => {
   resultExist = null;
   formInsert = null;
 });
-
-//Restor session storage
-if(sessionStorage.length>1){
-  for(let i=0; i<sessionStorage.length; i++){
-    let key = sessionStorage.key(i);
-    let resultBlockToRestor_JSON = sessionStorage.getItem(key);
-    let resultBlockToRestor = JSON.parse(resultBlockToRestor_JSON);
-    myPochLib.appendChild(resultBlockFunction(resultBlockToRestor, iconTrash));
-  };
-}
