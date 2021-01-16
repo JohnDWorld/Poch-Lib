@@ -15,6 +15,7 @@ const resultBlockFunction = (response, iconToUse) => {
   const description = resultBlock.appendChild(document.createElement("p"));
   description.setAttribute("class", "description-result");
   description.setAttribute("maxlength", "200");
+  //Check if they are a description
   if(response.volumeInfo.description == undefined) {
     description.textContent = "Description: Information manquante";
   } else {
@@ -22,6 +23,7 @@ const resultBlockFunction = (response, iconToUse) => {
   }
   const picture = resultBlock.appendChild(document.createElement("img"));
   picture.setAttribute("class", "picture-result");
+  //Check if they are a picture's link
   if(response.volumeInfo.imageLinks == undefined) {
     picture.setAttribute("src", "./image/unavailable.png");
   } else {
@@ -34,11 +36,13 @@ const resultBlockFunction = (response, iconToUse) => {
     //Add to my poch'list
     icon.addEventListener("click", (event) => {
       let checkBook = false;
+      //Check if a book exist in my poch list
       for(let i=0; i<sessionStorage.length; i++){
         if(response.volumeInfo.industryIdentifiers[0].identifier == sessionStorage.key(i)){
           checkBook = true;
         }
       };
+      //Add the book to my poch list or alert user that he already has the book
       if(checkBook) {
         alert("Vous ne pouvez ajouter deux fois le même livre");
       } else {
@@ -47,7 +51,6 @@ const resultBlockFunction = (response, iconToUse) => {
         sessionStorage.setItem(response.volumeInfo.industryIdentifiers[0].identifier, resultBlockToSave_JSON);
         myPochLib.appendChild(resultBlockToSave);
       }
-      checkBook = null;
     });
   } else if(iconToUse == iconTrash) {
     //Remove from my poch'list
