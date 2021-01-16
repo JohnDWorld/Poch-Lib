@@ -72,12 +72,8 @@ const iconBookmark = "./image/bookmark.svg";
 const iconTrash = "./image/trash.svg";
 let hr = hrList[0];
 let request = new XMLHttpRequest();
-let titleCheck = false;
-let authorCheck = false;
-let titleSearchByUser;
-let authorSearchByUser;
-let identifierResult;
-let descriptionResult;
+let titleSearchByUser = "";
+let authorSearchByUser = "";
 
 //Restor session storage
 if(sessionStorage.length != 0){
@@ -148,11 +144,9 @@ addNewBook.addEventListener("click", (event) => {
 //Action to grab the entry of user
 titleSearch.addEventListener("change", (event) => {
   titleSearchByUser = event.target.value;
-  titleCheck = true;
 });
-authorSearch.addEventListener("input", (event) => {
+authorSearch.addEventListener("change", (event) => {
   authorSearchByUser = event.target.value;
-  authorCheck = true;
 });
 
 //Action to send/create/remove result
@@ -185,12 +179,12 @@ search.addEventListener("click", (event) => {
   request.send();
 
   //Check if the user write something and insert the result
-  if(titleCheck && authorCheck) {
+  if(titleSearchByUser != "" && authorSearchByUser != "") {
     myBooks.insertBefore(result, hr);
-    titleCheck = false;
-    authorCheck = false;
+  } else {
+    alert("Vous devez entrer un titre et un auteur pour la recherche");
   }
-  event.preventDefault();
+event.preventDefault();
 });
 
 // Remove the result
