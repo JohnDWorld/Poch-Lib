@@ -1,20 +1,20 @@
 /* setup the layout in function of device */
-$clr-bckgrd: #F2F2F2;
-$clr-myBooks-1: #1C8C81;
-$clr-myBooks-2: #2AD2BF;
-$logo-url: "../image/logo/logo.svg";
-$logo-size: 80px;
+$clr_bckgrd: #F2F2F2;
+$clr_myBooks_1: #1C8C81;
+$clr_myBooks_2: #2AD2BF;
+$logo_url: "../image/logo/logo.svg";
+$logo_size: 80px;
 $margin: 2%;
 $size: 1em;
 
 body {
-	background-color: $clr-bckgrd;
+	background-color: $clr_bckgrd;
 }
 
 #myBooks {
 	text-align: center;
 	font-family: 'Redressed', cursive;
-	background: linear-gradient(to bottom right, $clr-myBooks-1, $clr-myBooks-2);
+	background: linear-gradient(to bottom right, $clr_myBooks_1, $clr_myBooks_2);
 	border: 2px solid;
 	border-radius: 10px 10px;
 	margin-right: $margin;
@@ -42,9 +42,9 @@ body {
 	}
 
 	#logo {
-		height: $logo-size;
-		width: $logo-size;
-		background-image: url($logo-url);
+		height: $logo_size;
+		width: $logo_size;
+		background-image: url($logo_url);
 		background-position: center;
 		border: 1px solid;
 		border-radius: 5px 5px;
@@ -73,9 +73,9 @@ body {
 	}
 
 	#logo {
-		height: $logo-size * 1.5;
-		width: $logo-size * 1.5;
-		background-image: url($logo-url);
+		height: $logo_size * 1.5;
+		width: $logo_size * 1.5;
+		background-image: url($logo_url);
 		background-position: center;
 		border: 1px solid;
 		border-radius: 5px 5px;
@@ -104,23 +104,13 @@ body {
 	}
 
 	#logo {
-		height: $logo-size * 2;
-		width: $logo-size * 2;
-		background-image: url($logo-url);
+		height: $logo_size * 2;
+		width: $logo_size * 2;
+		background-image: url($logo_url);
 		background-position: center;
 		border: 1px solid;
 		border-radius: 5px 5px;
 		box-shadow: 2px 2px 5px black;
 		justify-content: flex-start;
 	}
-  
-  .icon-result {
-    width: $logo-size;
-    height: $logo-size;
-  }
-  
-  .picture-result {
-    width: $logo-size;
-    height: $logo-size;
-  }
 }

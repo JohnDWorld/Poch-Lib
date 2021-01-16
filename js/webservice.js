@@ -49,7 +49,7 @@ const resultBlockFunction = (response, iconToUse) => {
         const resultBlockToSave = resultBlockFunction(response, iconTrash);
         const resultBlockToSave_JSON = JSON.stringify(response);
         sessionStorage.setItem(response.volumeInfo.industryIdentifiers[0].identifier, resultBlockToSave_JSON);
-        myPochLib.appendChild(resultBlockToSave);
+        containerSave.appendChild(resultBlockToSave);
       }
     });
   } else if(iconToUse == iconTrash) {
@@ -73,6 +73,8 @@ const hrList = document.getElementsByTagName("hr");
 const myAPIKey = "AIzaSyC5yCc8Aehtb-laJgLByQmzVdLKa9imdBs";
 const iconBookmark = "./image/bookmark.svg";
 const iconTrash = "./image/trash.svg";
+const containerSave = myPochLib.appendChild(document.createElement("div"));
+containerSave.setAttribute("id", "containerSave");
 let hr = hrList[0];
 let request = new XMLHttpRequest();
 let titleSearchByUser = "";
@@ -83,7 +85,7 @@ if(sessionStorage.length != 0){
   for(let i=0; i<sessionStorage.length; i++){
     let resultBlockToRestor_JSON = sessionStorage.getItem(sessionStorage.key(i));
     let resultBlockToRestor = JSON.parse(resultBlockToRestor_JSON);
-    myPochLib.appendChild(resultBlockFunction(resultBlockToRestor, iconTrash));
+    containerSave.appendChild(resultBlockFunction(resultBlockToRestor, iconTrash));
   };
 }
 
@@ -133,6 +135,9 @@ result.setAttribute("id", "result");
 const seperation = result.appendChild(document.createElement("hr"));
 const header = result.appendChild(document.createElement("h2"));
 header.setAttribute("id", "header-result");
+const containerResearch = result.appendChild(document.createElement("div"));
+containerResearch.setAttribute("id", "containerResearch");
+
 
 //Action to put form in #myBooks/remove from #myBooks
 addNewBook.addEventListener("click", (event) => {
@@ -172,7 +177,7 @@ search.addEventListener("click", (event) => {
       } else {
         header.textContent = "Resultat de la recherche";
         for(let i=0; i<response.items.length; i++) {
-          result.appendChild(resultBlockFunction(response.items[i], iconBookmark));
+          containerResearch.appendChild(resultBlockFunction(response.items[i], iconBookmark));
         }
       }
     }

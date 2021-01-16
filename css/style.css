@@ -86,12 +86,4 @@ body {
     border: 1px solid;
     border-radius: 5px 5px;
     box-shadow: 2px 2px 5px black;
-    justify-content: flex-start; }
-
-  .icon-result {
-    width: 80px;
-    height: 80px; }
-
-  .picture-result {
-    width: 80px;
-    height: 80px; } }
+    justify-content: flex-start; } }
