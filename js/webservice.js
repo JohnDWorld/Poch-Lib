@@ -18,7 +18,7 @@ const resultBlockFunction = (response, iconToUse) => {
   if(response.volumeInfo.description == undefined) {
     description.textContent = "Description: Information manquante";
   } else {
-    description.textContent = "Description: " + response.volumeInfo.description;
+    description.textContent = "Description: " + response.volumeInfo.description.substr(0, 200) + "...";
   }
   const picture = resultBlock.appendChild(document.createElement("img"));
   picture.setAttribute("class", "picture-result");
@@ -40,7 +40,7 @@ const resultBlockFunction = (response, iconToUse) => {
         }
       };
       if(checkBook) {
-        alert("Vous ne pourvez pass ajouter 2 fois le même livre à votre liste");
+        alert("Vous ne pouvez ajouter deux fois le même livre");
       } else {
         const resultBlockToSave = resultBlockFunction(response, iconTrash);
         const resultBlockToSave_JSON = JSON.stringify(response);
@@ -68,8 +68,6 @@ const myBooks = document.getElementById("myBooks");
 const myPochLib = document.getElementById("content");
 const hrList = document.getElementsByTagName("hr");
 const myAPIKey = "AIzaSyC5yCc8Aehtb-laJgLByQmzVdLKa9imdBs";
-const nbrResultToShow = 4;
-const nbrResultToSave = 0;
 const iconBookmark = "./image/bookmark.svg";
 const iconTrash = "./image/trash.svg";
 let hr = hrList[0];
@@ -82,7 +80,7 @@ let identifierResult;
 let descriptionResult;
 
 //Restor session storage
-if(sessionStorage.length != 1){
+if(sessionStorage.length != 0){
   for(let i=0; i<sessionStorage.length; i++){
     let resultBlockToRestor_JSON = sessionStorage.getItem(sessionStorage.key(i));
     let resultBlockToRestor = JSON.parse(resultBlockToRestor_JSON);
@@ -111,18 +109,16 @@ titleSearch.setAttribute("name", "title-search");
 titleSearch.setAttribute("id", "title-search");
 titleSearch.setAttribute("placeholder", "Rechercher un titre sur le site ...");
 titleSearch.setAttribute("required", "required");
-titleSearch.setAttribute("value", "Twiligh");
 const author = form.appendChild(document.createElement("div"));
 const authorLabel = author.appendChild(document.createElement("label"));
 authorLabel.setAttribute("for", "author-search");
-authorLabel.textContent = "Auteur du Livre";
+authorLabel.textContent = "Auteur";
 const authorSearch = author.appendChild(document.createElement("input"));
 authorSearch.setAttribute("type", "search");
 authorSearch.setAttribute("name", "author-search");
 authorSearch.setAttribute("id", "author-search");
 authorSearch.setAttribute("placeholder", "Rechercher un auteur sur le site ...");
 authorSearch.setAttribute("required", "required");
-authorSearch.setAttribute("value", "Stepheni");
 const search = form.appendChild(document.createElement("input"));
 search.setAttribute("type", "submit");
 search.setAttribute("id", "submit");
@@ -138,7 +134,6 @@ result.setAttribute("id", "result");
 const seperation = result.appendChild(document.createElement("hr"));
 const header = result.appendChild(document.createElement("h2"));
 header.setAttribute("id", "header-result");
-header.textContent = "Resultat de la recherche";
 
 //Action to put form in #myBooks/remove from #myBooks
 addNewBook.addEventListener("click", (event) => {
@@ -162,6 +157,7 @@ authorSearch.addEventListener("input", (event) => {
 
 //Action to send/create/remove result
 search.addEventListener("click", (event) => {
+
   //Request GET to Google Book
   request.onreadystatechange = function() {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
@@ -174,12 +170,18 @@ search.addEventListener("click", (event) => {
       
       // Create th result block
       let response = JSON.parse(this.responseText);
-      for(let i=0; i<response.items.length; i++) {
-        result.appendChild(resultBlockFunction(response.items[i], iconBookmark));
+      if(response.items == undefined){
+        header.textContent = "Aucun livre n’a été trouvé";
+      } else {
+        header.textContent = "Resultat de la recherche";
+        for(let i=0; i<response.items.length; i++) {
+          result.appendChild(resultBlockFunction(response.items[i], iconBookmark));
+        }
       }
     }
   };
-  request.open("GET", "https://www.googleapis.com/books/v1/volumes?q=" + titleSearchByUser + "&+inautor:" + authorSearchByUser + "&startIndex=0&maxResults=5&key=" + myAPIKey);
+  request.open("GET", "https://www.googleapis.com/books/v1/volumes?q=" + titleSearchByUser + "&+inautor:" + 
+    authorSearchByUser + "&startIndex=0&maxResults=20&key=" + myAPIKey);
   request.send();
 
   //Check if the user write something and insert the result
@@ -196,16 +198,8 @@ cancel.addEventListener("click", (event) => {
   let resutBlockExist = document.querySelector("#result .result-block");
   let resultExist = document.getElementById("result");
   let formInsert = document.getElementById("form");
-  if(resutBlockExist != null && resultExist != null) {
-    while (resutBlockExist[0] != null) {
-      resutBlockExist[0].remove();
-    };
+  if(resutBlockExist == null || resutBlockExist != null && resultExist != null && formInsert != null) {
+    formInsert.remove();
     resultExist.remove();
   }
-  if (formInsert != null && resultExist == null) {
-    formInsert.remove();
-  }
-  resutBlockExist = null;
-  resultExist = null;
-  formInsert = null;
 });
