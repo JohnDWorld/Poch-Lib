@@ -4,6 +4,9 @@ $clr_myBooks_1: #1C8C81;
 $clr_myBooks_2: #2AD2BF;
 $logo_url: "../image/logo/logo.svg";
 $logo_size: 80px;
+$picture_size_width: 50%;
+$picture_size_height: 65%;
+$icon_size: 40px;
 $margin: 2%;
 $size: 1em;
 
@@ -13,6 +16,7 @@ body {
 
 #myBooks {
 	text-align: center;
+	font-size: $size;
 	font-family: 'Redressed', cursive;
 	background: linear-gradient(to bottom right, $clr_myBooks_1, $clr_myBooks_2);
 	border: 2px solid;
@@ -22,6 +26,7 @@ body {
 	box-shadow: 5px 5px 10px black;
 }
 
+//Media query for phone
 @media screen and (max-width: 740px) {
 	h1 {
 		font-family: 'Playfair Display', serif;
@@ -51,12 +56,49 @@ body {
 		box-shadow: 2px 2px 5px black;
 		justify-content: flex-start;
 	}
+
+	#result>#containerResearch, #content>#containerSave {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
+	}
+
+	.result-block {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		border: 2px solid;
+		width: 50%;
+		padding: $margin/2;
+		margin-bottom: $margin;
+		background-color: grey;
+		border-radius: 10px 10px;
+		box-shadow: 5px 5px 10px black;
+		&>.entete-block {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			&>.icon-result {
+    			width: $icon_size/1.5;
+    			height: $icon_size/1.5;
+    			align-self: flex-start;
+    		}
+    	}
+    	&>.picture-result {
+    		position: relative;
+    		left: 50% - ($picture_size_width/2);
+    		width: $picture_size_width;
+    		height: $picture_size_height;
+  		}
+  	}
 }
 
+//Media query for tablet
 @media screen and (min-width: 740px) and (max-width: 1024px) {
 	h1 {
 		font-family: 'Playfair Display', serif;
-		font-size: $size * 2;
+		font-size: $size;
 		margin-left: $margin;
 	}
 
@@ -82,8 +124,46 @@ body {
 		box-shadow: 2px 2px 5px black;
 		justify-content: flex-start;
 	}
+
+	#result>#containerResearch, #content>#containerSave {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
+	}
+
+	.result-block {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		border: 2px solid;
+		width: 38%;
+		padding: $margin/2;
+		margin-bottom: $margin;
+		background-color: grey;
+		border-radius: 10px 10px;
+		box-shadow: 5px 5px 10px black;
+		&>.entete-block {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			&>.icon-result {
+    			width: $icon_size/1.2;
+    			height: $icon_size/1.2;
+    			align-self: flex-start;
+    		}
+    	}
+    	&>.picture-result {
+    		position: relative;
+    		left: 50% - ($picture_size_width/2);
+    		width: $picture_size_width;
+    		height: $picture_size_height;
+  		}
+  	}
 }
 
+
+//Media query for normal screen
 @media screen and (min-width: 1024px) {
 	h1 {
 		font-family: 'Playfair Display', serif;
@@ -112,5 +192,41 @@ body {
 		border-radius: 5px 5px;
 		box-shadow: 2px 2px 5px black;
 		justify-content: flex-start;
+	}
+
+	#result>#containerResearch, #content>#containerSave {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
+	}
+
+	.result-block {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		border: 2px solid;
+		width: 25%;
+		padding: $margin/2;
+		margin-bottom: $margin;
+		background-color: grey;
+		border-radius: 10px 10px;
+		box-shadow: 5px 5px 10px black;
+		&>.entete-block {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			&>.icon-result {
+    			width: $icon_size;
+    			height: $icon_size;
+    			align-self: flex-start;
+    		}
+    	}
+    	&>.picture-result {
+    		position: relative;
+    		left: 50% - ($picture_size_width/2);
+    		width: $picture_size_width;
+    		height: $picture_size_height;
+  		}
 	}
 }

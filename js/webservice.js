@@ -3,33 +3,12 @@
 const resultBlockFunction = (response, iconToUse) => {
   const resultBlock = document.createElement("div");
   resultBlock.setAttribute("class", "result-block");
-  const titleResult = resultBlock.appendChild(document.createElement("h3"));
+  const titleAndIcon = resultBlock.appendChild(document.createElement("div"));
+  titleAndIcon.setAttribute("class", "entete-block");
+  const titleResult = titleAndIcon.appendChild(document.createElement("h3"));
   titleResult.setAttribute("class", "title-result");
   titleResult.textContent = "Titre: " + response.volumeInfo.title;
-  const authorResult = resultBlock.appendChild(document.createElement("h3"));
-  authorResult.setAttribute("class", "author-result");
-  authorResult.textContent = "Auteur: " + response.volumeInfo.authors[0];//author[0] to use the first author of response
-  const id = resultBlock.appendChild(document.createElement("h4"));
-  id.setAttribute("id", response.volumeInfo.industryIdentifiers[0].identifier);
-  id.textContent = "Identifiant: " + response.volumeInfo.industryIdentifiers[0].identifier;
-  const description = resultBlock.appendChild(document.createElement("p"));
-  description.setAttribute("class", "description-result");
-  description.setAttribute("maxlength", "200");
-  //Check if they are a description
-  if(response.volumeInfo.description == undefined) {
-    description.textContent = "Description: Information manquante";
-  } else {
-    description.textContent = "Description: " + response.volumeInfo.description.substr(0, 200) + "...";
-  }
-  const picture = resultBlock.appendChild(document.createElement("img"));
-  picture.setAttribute("class", "picture-result");
-  //Check if they are a picture's link
-  if(response.volumeInfo.imageLinks == undefined) {
-    picture.setAttribute("src", "./image/unavailable.png");
-  } else {
-    picture.setAttribute("src", response.volumeInfo.imageLinks.thumbnail);
-  }
-  const icon = resultBlock.appendChild(document.createElement("img"));
+  const icon = titleAndIcon.appendChild(document.createElement("img"));
   icon.setAttribute("class", "icon-result");
   icon.setAttribute("src", iconToUse);
   if(iconToUse == iconBookmark) {
@@ -55,10 +34,34 @@ const resultBlockFunction = (response, iconToUse) => {
   } else if(iconToUse == iconTrash) {
     //Remove from my poch'list
     icon.addEventListener("click", (event) => {
-      const iconParentToRemove = icon.parentElement;
+      const iconParent = icon.parentElement;
+      const iconParentToRemove = iconParent.parentElement;
       iconParentToRemove.remove();
       sessionStorage.removeItem(response.volumeInfo.industryIdentifiers[0].identifier);
     })
+  }
+  const authorResult = resultBlock.appendChild(document.createElement("h3"));
+  authorResult.setAttribute("class", "author-result");
+  authorResult.textContent = "Auteur: " + response.volumeInfo.authors[0];//author[0] to use the first author of response
+  const id = resultBlock.appendChild(document.createElement("h4"));
+  id.setAttribute("id", response.volumeInfo.industryIdentifiers[0].identifier);
+  id.textContent = "Identifiant: " + response.volumeInfo.industryIdentifiers[0].identifier;
+  const description = resultBlock.appendChild(document.createElement("p"));
+  description.setAttribute("class", "description-result");
+  description.setAttribute("maxlength", "200");
+  //Check if they are a description
+  if(response.volumeInfo.description == undefined) {
+    description.textContent = "Description: Information manquante";
+  } else {
+    description.textContent = "Description: " + response.volumeInfo.description.substr(0, 200) + "...";
+  }
+  const picture = resultBlock.appendChild(document.createElement("img"));
+  picture.setAttribute("class", "picture-result");
+  //Check if they are a picture's link
+  if(response.volumeInfo.imageLinks == undefined) {
+    picture.setAttribute("src", "./image/unavailable.png");
+  } else {
+    picture.setAttribute("src", response.volumeInfo.imageLinks.thumbnail);
   }
   return resultBlock;
 }
@@ -100,25 +103,25 @@ myBooks.insertBefore(addNewBook, hr);
 const form = document.createElement("form");
 form.setAttribute("method", "post");
 form.setAttribute("id", "form");
-const title = form.appendChild(document.createElement("div"));
+const title = form.appendChild(document.createElement("h3"));
 const titleLabel = title.appendChild(document.createElement("label"));
 titleLabel.setAttribute("for", "title-search");
-titleLabel.textContent = "Titre du Livre";
+titleLabel.textContent = "Titre du Livre: ";
 const titleSearch = title.appendChild(document.createElement("input"));
 titleSearch.setAttribute("type", "search");
 titleSearch.setAttribute("name", "title-search");
 titleSearch.setAttribute("id", "title-search");
-titleSearch.setAttribute("placeholder", "Rechercher un titre sur le site ...");
+titleSearch.setAttribute("placeholder", "Rechercher un titre ...");
 titleSearch.setAttribute("required", "required");
-const author = form.appendChild(document.createElement("div"));
+const author = form.appendChild(document.createElement("h3"));
 const authorLabel = author.appendChild(document.createElement("label"));
 authorLabel.setAttribute("for", "author-search");
-authorLabel.textContent = "Auteur";
+authorLabel.textContent = "Auteur: ";
 const authorSearch = author.appendChild(document.createElement("input"));
 authorSearch.setAttribute("type", "search");
 authorSearch.setAttribute("name", "author-search");
 authorSearch.setAttribute("id", "author-search");
-authorSearch.setAttribute("placeholder", "Rechercher un auteur sur le site ...");
+authorSearch.setAttribute("placeholder", "Rechercher un auteur ...");
 authorSearch.setAttribute("required", "required");
 const search = form.appendChild(document.createElement("input"));
 search.setAttribute("type", "submit");
@@ -183,7 +186,7 @@ search.addEventListener("click", (event) => {
     }
   };
   request.open("GET", "https://www.googleapis.com/books/v1/volumes?q=" + titleSearchByUser + "&+inautor:" + 
-    authorSearchByUser + "&startIndex=0&maxResults=20&key=" + myAPIKey);
+    authorSearchByUser + "&startIndex=0&maxResults=24&key=" + myAPIKey);
   request.send();
 
   //Check if the user write something and insert the result

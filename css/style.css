@@ -4,6 +4,7 @@ body {
 
 #myBooks {
   text-align: center;
+  font-size: 1em;
   font-family: 'Redressed', cursive;
   background: linear-gradient(to bottom right, #1C8C81, #2AD2BF);
   border: 2px solid;
@@ -36,11 +37,42 @@ body {
     border: 1px solid;
     border-radius: 5px 5px;
     box-shadow: 2px 2px 5px black;
-    justify-content: flex-start; } }
+    justify-content: flex-start; }
+
+  #result > #containerResearch, #content > #containerSave {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; }
+
+  .result-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 2px solid;
+    width: 50%;
+    padding: 1%;
+    margin-bottom: 2%;
+    background-color: grey;
+    border-radius: 10px 10px;
+    box-shadow: 5px 5px 10px black; }
+    .result-block > .entete-block {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center; }
+      .result-block > .entete-block > .icon-result {
+        width: 26.6666666667px;
+        height: 26.6666666667px;
+        align-self: flex-start; }
+    .result-block > .picture-result {
+      position: relative;
+      left: 25%;
+      width: 50%;
+      height: 65%; } }
 @media screen and (min-width: 740px) and (max-width: 1024px) {
   h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 2em;
+    font-size: 1em;
     margin-left: 2%; }
 
   h2 {
@@ -61,7 +93,38 @@ body {
     border: 1px solid;
     border-radius: 5px 5px;
     box-shadow: 2px 2px 5px black;
-    justify-content: flex-start; } }
+    justify-content: flex-start; }
+
+  #result > #containerResearch, #content > #containerSave {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; }
+
+  .result-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 2px solid;
+    width: 38%;
+    padding: 1%;
+    margin-bottom: 2%;
+    background-color: grey;
+    border-radius: 10px 10px;
+    box-shadow: 5px 5px 10px black; }
+    .result-block > .entete-block {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center; }
+      .result-block > .entete-block > .icon-result {
+        width: 33.3333333333px;
+        height: 33.3333333333px;
+        align-self: flex-start; }
+    .result-block > .picture-result {
+      position: relative;
+      left: 25%;
+      width: 50%;
+      height: 65%; } }
 @media screen and (min-width: 1024px) {
   h1 {
     font-family: 'Playfair Display', serif;
@@ -86,4 +149,35 @@ body {
     border: 1px solid;
     border-radius: 5px 5px;
     box-shadow: 2px 2px 5px black;
-    justify-content: flex-start; } }
+    justify-content: flex-start; }
+
+  #result > #containerResearch, #content > #containerSave {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; }
+
+  .result-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 2px solid;
+    width: 25%;
+    padding: 1%;
+    margin-bottom: 2%;
+    background-color: grey;
+    border-radius: 10px 10px;
+    box-shadow: 5px 5px 10px black; }
+    .result-block > .entete-block {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center; }
+      .result-block > .entete-block > .icon-result {
+        width: 40px;
+        height: 40px;
+        align-self: flex-start; }
+    .result-block > .picture-result {
+      position: relative;
+      left: 25%;
+      width: 50%;
+      height: 65%; } }
