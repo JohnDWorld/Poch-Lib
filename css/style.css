@@ -22,6 +22,9 @@ body {
   h2 {
     font-size: 1em; }
 
+  #form > h3, #form > h2 {
+    font-size: 1em; }
+
   .title {
     display: flex;
     justify-content: center;
@@ -38,6 +41,46 @@ body {
     border-radius: 5px 5px;
     box-shadow: 2px 2px 5px black;
     justify-content: flex-start; }
+
+  #addNewBook {
+    background: #011c37;
+    color: #2AD2BF;
+    font-size: 1em;
+    padding-bottom: 2px;
+    cursor: pointer;
+    border-radius: 10px 10px;
+    transform: scale(1);
+    transition: transform 300ms; }
+    #addNewBook:hover {
+      transform: scale(1.1); }
+
+  #submit {
+    background: green;
+    color: #F2F2F2;
+    font-size: 1em;
+    padding-bottom: 2px;
+    cursor: pointer;
+    border-radius: 10px 10px;
+    margin-right: 2%;
+    transform: scale(1);
+    transition: transform 300ms; }
+    #submit:hover {
+      transform: scale(1.1);
+      background-color: #006700; }
+
+  #reset {
+    background: red;
+    color: #F2F2F2;
+    font-size: 1em;
+    padding-bottom: 2px;
+    cursor: pointer;
+    border-radius: 10px 10px;
+    margin-left: 2%;
+    transform: scale(1);
+    transition: transform 300ms; }
+    #reset:hover {
+      transform: scale(1.1);
+      background-color: #e60000; }
 
   #result > #containerResearch, #content > #containerSave {
     display: flex;
@@ -63,7 +106,12 @@ body {
       .result-block > .entete-block > .icon-result {
         width: 26.6666666667px;
         height: 26.6666666667px;
-        align-self: flex-start; }
+        align-self: flex-start;
+        cursor: pointer;
+        transform: scale(1);
+        transition: transform 300ms; }
+        .result-block > .entete-block > .icon-result:hover {
+          transform: scale(1.1); }
     .result-block > .picture-result {
       position: relative;
       left: 25%;
@@ -77,6 +125,9 @@ body {
 
   h2 {
     font-size: 1.5em; }
+
+  #form > h3, #form > h2 {
+    font-size: 1.2em; }
 
   .title {
     display: flex;
@@ -94,6 +145,46 @@ body {
     border-radius: 5px 5px;
     box-shadow: 2px 2px 5px black;
     justify-content: flex-start; }
+
+  #addNewBook {
+    background: #011c37;
+    color: #2AD2BF;
+    font-size: 1.2em;
+    padding-bottom: 2px;
+    cursor: pointer;
+    border-radius: 10px 10px;
+    transform: scale(1);
+    transition: transform 300ms; }
+    #addNewBook:hover {
+      transform: scale(1.1); }
+
+  #submit {
+    background: green;
+    color: #F2F2F2;
+    font-size: 1.2em;
+    padding-bottom: 2px;
+    cursor: pointer;
+    border-radius: 10px 10px;
+    margin-right: 2%;
+    transform: scale(1);
+    transition: transform 300ms; }
+    #submit:hover {
+      transform: scale(1.1);
+      background-color: #006700; }
+
+  #reset {
+    background: red;
+    color: #F2F2F2;
+    font-size: 1.2em;
+    padding-bottom: 2px;
+    cursor: pointer;
+    border-radius: 10px 10px;
+    margin-left: 2%;
+    transform: scale(1);
+    transition: transform 300ms; }
+    #reset:hover {
+      transform: scale(1.1);
+      background-color: #e60000; }
 
   #result > #containerResearch, #content > #containerSave {
     display: flex;
@@ -119,7 +210,12 @@ body {
       .result-block > .entete-block > .icon-result {
         width: 33.3333333333px;
         height: 33.3333333333px;
-        align-self: flex-start; }
+        align-self: flex-start;
+        cursor: pointer;
+        transform: scale(1);
+        transition: transform 300ms; }
+        .result-block > .entete-block > .icon-result:hover {
+          transform: scale(1.1); }
     .result-block > .picture-result {
       position: relative;
       left: 25%;
@@ -133,6 +229,9 @@ body {
 
   h2 {
     font-size: 2em; }
+
+  #form > h3, #form > h2 {
+    font-size: 1.5em; }
 
   .title {
     display: flex;
@@ -150,6 +249,46 @@ body {
     border-radius: 5px 5px;
     box-shadow: 2px 2px 5px black;
     justify-content: flex-start; }
+
+  #addNewBook {
+    background: #011c37;
+    color: #2AD2BF;
+    font-size: 1.5em;
+    padding-bottom: 2px;
+    cursor: pointer;
+    border-radius: 10px 10px;
+    transform: scale(1);
+    transition: transform 300ms; }
+    #addNewBook:hover {
+      transform: scale(1.1); }
+
+  #submit {
+    background: green;
+    color: #F2F2F2;
+    font-size: 1.5em;
+    padding-bottom: 2px;
+    cursor: pointer;
+    border-radius: 10px 10px;
+    margin-right: 2%;
+    transform: scale(1);
+    transition: transform 300ms; }
+    #submit:hover {
+      transform: scale(1.1);
+      background-color: #006700; }
+
+  #reset {
+    background: red;
+    color: #F2F2F2;
+    font-size: 1.5em;
+    padding-bottom: 2px;
+    cursor: pointer;
+    border-radius: 10px 10px;
+    margin-left: 2%;
+    transform: scale(1);
+    transition: transform 300ms; }
+    #reset:hover {
+      transform: scale(1.1);
+      background-color: #e60000; }
 
   #result > #containerResearch, #content > #containerSave {
     display: flex;
@@ -175,8 +314,15 @@ body {
       .result-block > .entete-block > .icon-result {
         width: 40px;
         height: 40px;
-        align-self: flex-start; }
+        align-self: flex-start;
+        cursor: pointer;
+        transform: scale(1);
+        transition: transform 300ms; }
+        .result-block > .entete-block > .icon-result:hover {
+          transform: scale(1.1); }
     .result-block > .picture-result {
+      border: 2px solid;
+      box-shadow: 3px 2px 1px black;
       position: relative;
       left: 25%;
       width: 50%;

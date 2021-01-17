@@ -2,11 +2,15 @@
 $clr_bckgrd: #F2F2F2;
 $clr_myBooks_1: #1C8C81;
 $clr_myBooks_2: #2AD2BF;
+$clr_bck_add: #011c37;
+$clr_bck_submit: green;
+$clr_bck_cancel: red;
 $logo_url: "../image/logo/logo.svg";
 $logo_size: 80px;
 $picture_size_width: 50%;
 $picture_size_height: 65%;
 $icon_size: 40px;
+$icon_solid: "../image/bookmark-solid.svg";
 $margin: 2%;
 $size: 1em;
 
@@ -38,6 +42,10 @@ body {
 		font-size: $size;
 	}
 
+	#form>h3,  #form>h2 {
+		font-size: $size;
+	}
+
 	.title {
 		display: flex;
 		justify-content: center;
@@ -55,6 +63,52 @@ body {
 		border-radius: 5px 5px;
 		box-shadow: 2px 2px 5px black;
 		justify-content: flex-start;
+	}
+
+	#addNewBook {
+		background: $clr_bck_add;
+    	color: $clr_myBooks_2;
+    	font-size: $size;
+    	padding-bottom: 2px;
+    	cursor: pointer;
+    	border-radius: 10px 10px;
+    	transform: scale(1);
+    	transition: transform 300ms;
+    	&:hover {
+        	transform: scale(1.1);
+    	}
+	}
+
+	#submit {
+		background: $clr_bck_submit;
+    	color: $clr_bckgrd;
+    	font-size: $size;
+    	padding-bottom: 2px;
+    	cursor: pointer;
+    	border-radius: 10px 10px;
+    	margin-right: $margin;
+    	transform: scale(1);
+    	transition: transform 300ms;
+    	&:hover {
+        	transform: scale(1.1);
+        	background-color: darken($clr_bck_submit, 5%);
+    	}
+	}
+
+	#reset {
+		background: $clr_bck_cancel;
+    	color: $clr_bckgrd;
+    	font-size: $size;
+    	padding-bottom: 2px;
+    	cursor: pointer;
+    	border-radius: 10px 10px;
+    	margin-left: $margin;
+    	transform: scale(1);
+    	transition: transform 300ms;
+    	&:hover {
+        	transform: scale(1.1);
+        	background-color: darken($clr_bck_cancel, 5%);
+    	}
 	}
 
 	#result>#containerResearch, #content>#containerSave {
@@ -83,6 +137,12 @@ body {
     			width: $icon_size/1.5;
     			height: $icon_size/1.5;
     			align-self: flex-start;
+    			cursor: pointer;
+    			transform: scale(1);
+    			transition: transform 300ms;
+    			&:hover{
+    				transform: scale(1.1);
+    			}
     		}
     	}
     	&>.picture-result {
@@ -106,6 +166,10 @@ body {
 		font-size: $size * 1.5;
 	}
 
+	#form>h3,  #form>h2 {
+		font-size: $size * 1.2;
+	}
+
 	.title {
 		display: flex;
 		justify-content: flex-start;
@@ -123,6 +187,52 @@ body {
 		border-radius: 5px 5px;
 		box-shadow: 2px 2px 5px black;
 		justify-content: flex-start;
+	}
+
+	#addNewBook {
+		background: $clr_bck_add;
+    	color: $clr_myBooks_2;
+    	font-size: $size * 1.2;
+    	padding-bottom: 2px;
+    	cursor: pointer;
+    	border-radius: 10px 10px;
+    	transform: scale(1);
+    	transition: transform 300ms;
+    	&:hover {
+        	transform: scale(1.1);
+    	}
+	}
+
+	#submit {
+		background: $clr_bck_submit;
+    	color: $clr_bckgrd;
+    	font-size: $size * 1.2;
+    	padding-bottom: 2px;
+    	cursor: pointer;
+    	border-radius: 10px 10px;
+    	margin-right: $margin;
+    	transform: scale(1);
+    	transition: transform 300ms;
+    	&:hover {
+        	transform: scale(1.1);
+        	background-color: darken($clr_bck_submit, 5%);
+    	}
+	}
+
+	#reset {
+		background: $clr_bck_cancel;
+    	color: $clr_bckgrd;
+    	font-size: $size * 1.2;
+    	padding-bottom: 2px;
+    	cursor: pointer;
+    	border-radius: 10px 10px;
+    	margin-left: $margin;
+    	transform: scale(1);
+    	transition: transform 300ms;
+    	&:hover {
+        	transform: scale(1.1);
+        	background-color: darken($clr_bck_cancel, 5%);
+    	}
 	}
 
 	#result>#containerResearch, #content>#containerSave {
@@ -151,6 +261,12 @@ body {
     			width: $icon_size/1.2;
     			height: $icon_size/1.2;
     			align-self: flex-start;
+    			cursor: pointer;
+    			transform: scale(1);
+    			transition: transform 300ms;
+    			&:hover{
+    				transform: scale(1.1);
+    			}
     		}
     	}
     	&>.picture-result {
@@ -175,6 +291,10 @@ body {
 		font-size: $size * 2;
 	}
 
+	#form>h3,  #form>h2 {
+		font-size: $size * 1.5;
+	}
+
 	.title {
 		display: flex;
 		justify-content: flex-start;
@@ -192,6 +312,52 @@ body {
 		border-radius: 5px 5px;
 		box-shadow: 2px 2px 5px black;
 		justify-content: flex-start;
+	}
+
+	#addNewBook {
+		background: $clr_bck_add;
+    	color: $clr_myBooks_2;
+    	font-size: $size * 1.5;
+    	padding-bottom: 2px;
+    	cursor: pointer;
+    	border-radius: 10px 10px;
+    	transform: scale(1);
+    	transition: transform 300ms;
+    	&:hover {
+        	transform: scale(1.1);
+    	}
+	}
+
+	#submit {
+		background: $clr_bck_submit;
+    	color: $clr_bckgrd;
+    	font-size: $size * 1.5;
+    	padding-bottom: 2px;
+    	cursor: pointer;
+    	border-radius: 10px 10px;
+    	margin-right: $margin;
+    	transform: scale(1);
+    	transition: transform 300ms;
+    	&:hover {
+        	transform: scale(1.1);
+        	background-color: darken($clr_bck_submit, 5%);
+    	}
+	}
+
+	#reset {
+		background: $clr_bck_cancel;
+    	color: $clr_bckgrd;
+    	font-size: $size * 1.5;
+    	padding-bottom: 2px;
+    	cursor: pointer;
+    	border-radius: 10px 10px;
+    	margin-left: $margin;
+    	transform: scale(1);
+    	transition: transform 300ms;
+    	&:hover {
+        	transform: scale(1.1);
+        	background-color: darken($clr_bck_cancel, 5%);
+    	}
 	}
 
 	#result>#containerResearch, #content>#containerSave {
@@ -220,9 +386,17 @@ body {
     			width: $icon_size;
     			height: $icon_size;
     			align-self: flex-start;
+    			cursor: pointer;
+    			transform: scale(1);
+    			transition: transform 300ms;
+    			&:hover{
+    				transform: scale(1.1);
+    			}
     		}
     	}
     	&>.picture-result {
+    		border: 2px solid;
+    		box-shadow: 3px 2px 1px black;
     		position: relative;
     		left: 50% - ($picture_size_width/2);
     		width: $picture_size_width;
