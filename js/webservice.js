@@ -103,21 +103,19 @@ myBooks.insertBefore(addNewBook, hr);
 const form = document.createElement("form");
 form.setAttribute("method", "post");
 form.setAttribute("id", "form");
-const title = form.appendChild(document.createElement("h3"));
-const titleLabel = title.appendChild(document.createElement("label"));
+const titleLabel = form.appendChild(document.createElement("label"));
 titleLabel.setAttribute("for", "title-search");
-titleLabel.textContent = "Titre du Livre: ";
-const titleSearch = title.appendChild(document.createElement("input"));
+titleLabel.textContent = "Titre du Livre";
+const titleSearch = form.appendChild(document.createElement("input"));
 titleSearch.setAttribute("type", "search");
 titleSearch.setAttribute("name", "title-search");
 titleSearch.setAttribute("id", "title-search");
 titleSearch.setAttribute("placeholder", "Rechercher un titre ...");
 titleSearch.setAttribute("required", "required");
-const author = form.appendChild(document.createElement("h3"));
-const authorLabel = author.appendChild(document.createElement("label"));
+const authorLabel = form.appendChild(document.createElement("label"));
 authorLabel.setAttribute("for", "author-search");
-authorLabel.textContent = "Auteur: ";
-const authorSearch = author.appendChild(document.createElement("input"));
+authorLabel.textContent = "Auteur";
+const authorSearch = form.appendChild(document.createElement("input"));
 authorSearch.setAttribute("type", "search");
 authorSearch.setAttribute("name", "author-search");
 authorSearch.setAttribute("id", "author-search");
@@ -145,11 +143,8 @@ containerResearch.setAttribute("id", "containerResearch");
 //Action to put form in #myBooks/remove from #myBooks
 addNewBook.addEventListener("click", (event) => {
   const formInsert = document.getElementById("form");
-  if (formInsert == null) {
-    addNewBook.insertAfter(form);
-  } else {
-    myBooks.removeChild(formInsert);
-  }
+  addNewBook.insertAfter(form);
+  myBooks.removeChild(addNewBook);
 });
 
 //Action to grab the entry of user
@@ -200,6 +195,8 @@ event.preventDefault();
 
 // Remove the result
 cancel.addEventListener("click", (event) => {
+  const h2 = document.getElementsByClassName("h2");
+  h2[0].insertAfter(addNewBook);
   let resutBlockExist = document.querySelector("#result .result-block");
   let resultExist = document.getElementById("result");
   let formInsert = document.getElementById("form");
@@ -207,4 +204,5 @@ cancel.addEventListener("click", (event) => {
     formInsert.remove();
     resultExist.remove();
   }
+  
 });

@@ -3,8 +3,8 @@ $clr_bckgrd: #F2F2F2;
 $clr_myBooks_1: #1C8C81;
 $clr_myBooks_2: #2AD2BF;
 $clr_bck_add: #011c37;
-$clr_bck_submit: green;
-$clr_bck_cancel: red;
+$clr_bck_submit: #008080;
+$clr_bck_cancel: #ef5134;
 $logo_url: "../image/logo/logo.svg";
 $logo_size: 80px;
 $picture_size_width: 50%;
@@ -18,21 +18,13 @@ body {
 	background-color: $clr_bckgrd;
 }
 
+label {
+	display: block;
+}
+
 h1 {
 	font-family: 'Playfair Display', serif;
 	margin-left: $margin;
-}
-
-#myBooks {
-	text-align: center;
-	font-size: $size;
-	font-family: 'Redressed', cursive;
-	background: linear-gradient(to bottom right, $clr_myBooks_1, $clr_myBooks_2);
-	border: 2px solid;
-	border-radius: 10px 10px;
-	margin-right: $margin;
-	margin-left: $margin;
-	box-shadow: 5px 5px 10px black;
 }
 
 .title {
@@ -47,11 +39,12 @@ h1 {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
+	text-align: left;
 	border: 2px solid;
 	width: 90%;
 	padding: $margin/2;
 	margin-bottom: $margin;
-	background-color: grey;
+	background-color: #d2d2d2;
 	border-radius: 10px 10px;
 	box-shadow: 5px 5px 10px black;
 	&>.entete-block {
@@ -81,6 +74,29 @@ h1 {
 	}
 }
 
+#myBooks {
+	text-align: center;
+	font-size: $size;
+	font-family: 'Playfair Display', serif;
+	margin-right: $margin;
+	margin-left: $margin;
+}
+
+#form {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	&>#title-search {
+		width: 100%;
+		font-size: $size * 1.1;
+   		margin-bottom: $margin;
+	}
+	&>#author-search {
+		width: 100%;
+		font-size: $size * 1.1;
+	}
+}
+
 #logo {
 	background-image: url($logo_url);
 	background-position: center;
@@ -95,7 +111,7 @@ h1 {
    	color: $clr_myBooks_2;
    	padding-bottom: 2px;
    	cursor: pointer;
-   	border-radius: 10px 10px;
+   	border-radius: 3px 3px;
    	transform: scale(1);
    	transition: transform 300ms;
    	&:hover {
@@ -106,10 +122,11 @@ h1 {
 #submit {
 	background: $clr_bck_submit;
    	color: $clr_bckgrd;
-   	padding-bottom: 2px;
+   	width: 150px;
    	cursor: pointer;
-   	border-radius: 10px 10px;
-   	margin-right: $margin;
+   	border-radius: 3px 3px;
+   	margin-top: $margin;
+   	margin-bottom: $margin;
    	transform: scale(1);
    	transition: transform 300ms;
    	&:hover {
@@ -121,10 +138,9 @@ h1 {
 #reset {
 	background: $clr_bck_cancel;
    	color: $clr_bckgrd;
-   	padding-bottom: 2px;
+   	width: 150px;
    	cursor: pointer;
-   	border-radius: 10px 10px;
-   	margin-left: $margin;
+   	border-radius: 3px 3px;
    	transform: scale(1);
    	transition: transform 300ms;
    	&:hover {
@@ -141,7 +157,7 @@ h1 {
 
 //Media query for phone
 @media screen and (max-width: 740px) {
-	h1, h2, #form>h3,  #form>h2, #addNewBook, #submit, #reset {
+	h1, h2, label, #addNewBook, #submit, #reset {
 		font-size: $size;
 	}
 
@@ -153,6 +169,10 @@ h1 {
 		height: $logo_size;
 		width: $logo_size;
 	}
+
+	#form>#title-search, #form>#author-search {
+		font-size: $size / 1.2;
+	}
 }
 
 //Media query for tablet
@@ -161,13 +181,8 @@ h1 {
 		font-size: $size * 1.5;
 	}
 
-	#form>h3,  #form>h2, #addNewBook, #submit, #reset  {
+	label, #addNewBook, #submit, #reset  {
 		font-size: $size * 1.2;
-	}
-
-	#logo {
-		height: $logo_size * 1.5;
-		width: $logo_size * 1.5;
 	}
 
 	.result-block {
@@ -177,8 +192,12 @@ h1 {
     		height: $icon_size/1.2;
     	}
   	}
-}
 
+	#logo {
+		height: $logo_size * 1.5;
+		width: $logo_size * 1.5;
+	}
+}
 
 //Media query for normal screen
 @media screen and (min-width: 1024px) {
@@ -190,13 +209,8 @@ h1 {
 		font-size: $size * 2;
 	}
 
-	#form>h3,  #form>h2, #addNewBook, #submit, #reset {
+	label, #addNewBook, #submit, #reset {
 		font-size: $size * 1.5;
-	}
-
-	#logo {
-		height: $logo_size * 2;
-		width: $logo_size * 2;
 	}
 
 	.result-block {
@@ -205,5 +219,10 @@ h1 {
     		width: $icon_size;
     		height: $icon_size;    		
     	}
+	}
+
+	#logo {
+		height: $logo_size * 2;
+		width: $logo_size * 2;
 	}
 }
